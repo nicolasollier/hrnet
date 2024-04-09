@@ -1,8 +1,12 @@
-# React + Vite
+# Projet 13 Openclassrooms
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##Brief
+Votre mission principale sera de refondre les pages clés de l’application en remplaçant un plugin jQuery spécifique par un composant React.
+Cela impliquera une compréhension approfondie des deux technologies et leur interaction.
 
-Currently, two official plugins are available:
+Vous serez chargé de mesurer les performances de l'application avant et après la conversion. Cette analyse de performance vous permettra de quantifier les avantages de la migration vers React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##Compétences
+La migration d'une application de jQuery vers React est un exemple concret de la manière de réduire la dette technique et d'améliorer la performance d'une application web. 
+
+La maîtrise de ces techniques est essentielle pour les développeurs front-end, surtout dans un contexte où la modernisation des applications existantes est souvent nécessaire. 
