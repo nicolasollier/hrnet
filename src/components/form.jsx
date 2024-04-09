@@ -1,5 +1,7 @@
 import InputForm from "./InputForm";
 import { departments, states } from "../constants";
+import SubmitButton from "./SubmitButton";
+import {saveEmployee} from "../../utils/saveEmployee"
 
 const Form = () => {
   const formStyles = {
@@ -24,6 +26,8 @@ const Form = () => {
     <form style={formStyles} action="#">
       <InputForm name="first_name" />
       <InputForm name="last_name" />
+      <InputForm name="date_of_birth"></InputForm>
+      <InputForm name="start_date"></InputForm>
 
       <fieldset style={addressStyles}>
         <legend>Address</legend>
@@ -35,6 +39,7 @@ const Form = () => {
       </fieldset>
       
       <InputForm id="department" name="department" type="text" isSelect data={departments}/>
+      <SubmitButton type="submit" onClick={saveEmployee} />
     </form>
   );
 }

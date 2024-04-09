@@ -20,14 +20,15 @@ const InputForm = ({ name, type, placeholder, value, onChange, isSelect = false,
   }
 
   const parseName = (name) => {
-    if (name.includes('_')) {
-      const parsedName = name.split('_')
-
-      return `${parsedName[0].charAt(0).toUpperCase() + parsedName[0].slice(1)} ${parsedName[1].charAt(0).toUpperCase() + parsedName[1].slice(1)}`;
-    }
-
-    return name.charAt(0).toUpperCase() + name.slice(1)
+  let words = name.split('_');
+  
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
   }
+  
+  return words.join(' ');
+}
+
 
   return (
     <>
