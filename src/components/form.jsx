@@ -1,4 +1,4 @@
-import Input from "./input";
+import InputForm from "./InputForm";
 import { departments, states } from "../constants";
 
 const Form = () => {
@@ -22,19 +22,19 @@ const Form = () => {
 
   return (
     <form style={formStyles} action="#">
-      <Input name="first_name" />
-      <Input name="last_name" />
+      <InputForm name="first_name" />
+      <InputForm name="last_name" />
 
       <fieldset style={addressStyles}>
         <legend>Address</legend>
 
-        <Input id="street" name="street" type="text" />
-        <Input id="city" name="city" type="text" />
-        <Input id="state" name="state" type="text" isSelect data={states}/>
-        <Input id="zip_code" name="zip_code" type="number" />
+        <InputForm id="street" name="street" type="text" />
+        <InputForm id="city" name="city" type="text" />
+        <InputForm id="state" name="state" type="text" isSelect data={states}/>
+        <InputForm id="zip_code" name="zip_code" type="number" />
       </fieldset>
       
-      <Input id="department" name="department" type="text" isSelect data={departments}/>
+      <InputForm id="department" name="department" type="text" isSelect data={departments}/>
     </form>
   );
 }

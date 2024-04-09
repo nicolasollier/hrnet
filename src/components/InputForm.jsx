@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Input = ({ name, type, placeholder, value, onChange, isSelect = false, data = [] }) => {
+const InputForm = ({ name, type, placeholder, value, onChange, isSelect = false, data = [] }) => {
   const containerStyles = {
     width: '100%',
     display: 'flex',
@@ -46,7 +46,7 @@ const Input = ({ name, type, placeholder, value, onChange, isSelect = false, dat
   );
 }
 
-Input.propTypes = {
+InputForm.propTypes = {
   name: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
@@ -56,4 +56,4 @@ Input.propTypes = {
   data: PropTypes.array,
 }
 
-export default Input;
+export default InputForm;

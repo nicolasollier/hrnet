@@ -1,4 +1,6 @@
-const Header = () => {
+import PropTypes from 'prop-types';
+
+const Header = ({ children }) => {
   const headerStyles = {
     display: 'flex',
     flexDirection: 'column',
@@ -6,12 +8,15 @@ const Header = () => {
     alignItems: 'center',
   }
 
-  return ( 
+  return (
     <header style={headerStyles}>
-      <h1>HRnet</h1>  
-      <a>View current employees</a>
+      {children}
     </header>
-   );
+  );
 }
- 
+
+Header.propTypes = {
+  children: PropTypes.string,
+}
+
 export default Header;
