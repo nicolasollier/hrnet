@@ -16,7 +16,7 @@ const Header = ({ children }) => {
 }
 
 Header.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.any,
 }
 
 export default Header;

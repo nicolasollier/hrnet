@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import InputForm from "./InputForm";
 import { departments, states } from "../constants";
 import SubmitButton from "./SubmitButton";
-import {saveEmployee} from "../../utils/saveEmployee"
+import { saveEmployee } from "../../utils/saveEmployee"
+import $ from "jquery";
+import "jquery-datetimepicker";
 
 const Form = () => {
   const formStyles = {
@@ -22,6 +25,22 @@ const Form = () => {
     paddingBottom: '2rem'
   }
 
+  useEffect(() => {
+    const initializeDateInputs = () => {
+      $('#date_of_birth').datetimepicker({
+        timepicker: false,
+        format: 'm/d/Y'
+      });
+
+      $('#start_date').datetimepicker({
+        timepicker: false,
+        format: 'm/d/Y'
+      });
+    };
+
+    initializeDateInputs();
+  }, [])
+
   return (
     <form style={formStyles} action="#">
       <InputForm name="first_name" />
@@ -34,11 +53,11 @@ const Form = () => {
 
         <InputForm id="street" name="street" type="text" />
         <InputForm id="city" name="city" type="text" />
-        <InputForm id="state" name="state" type="text" isSelect data={states}/>
+        <InputForm id="state" name="state" type="text" isSelect data={states} />
         <InputForm id="zip_code" name="zip_code" type="number" />
       </fieldset>
-      
-      <InputForm id="department" name="department" type="text" isSelect data={departments}/>
+
+      <InputForm id="department" name="department" type="text" isSelect data={departments} />
       <SubmitButton type="submit" onClick={saveEmployee} />
     </form>
   );

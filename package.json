@@ -13,6 +13,7 @@
     "datatables.net": "^2.0.3",
     "datatables.net-dt": "^2.0.3",
     "jquery": "^3.7.1",
+    "jquery-datetimepicker": "^2.5.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.22.3",
