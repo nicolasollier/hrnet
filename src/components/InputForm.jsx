@@ -25,6 +25,7 @@ const InputForm = ({ name, type = 'text', placeholder, value, onChange, isSelect
       <label htmlFor={name}>{parseName(name)}</label>
       {isSelect ? (
         <select className={styles.inputStyles} name={name} id={name} value={value} onChange={onChange}>
+          <option value="">Select {parseName(name)}</option>
           {data.map((el, index) => (
             <option key={index} value={el.abbreviation || el.name}>{el.name}</option>
           ))}

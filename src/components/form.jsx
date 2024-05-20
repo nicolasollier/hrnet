@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import InputForm from "./InputForm";
 import { departments, states } from "../constants";
 import SubmitButton from "./SubmitButton";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addEmployee } from "../reducers/employeesReducer";
 
 const Form = () => {
-  const formIsValid = useSelector(state => state.form.formIsValid);
   const dispatch = useDispatch();
 
   const formStyles = {
@@ -33,16 +32,36 @@ const Form = () => {
   const [employeeData, setEmployeeData] = useState({
     firstName: '',
     lastName: '',
-    dateOfBirth: new Date(),
-    startDate: new Date(),
+    dateOfBirth: dateOfBirth,
+    startDate: startDate,
     street: '',
     city: '',
     state: '',
     zipCode: '',
     department: ''
   });
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const cleanFormInputs = () => {
+  const handleInputChange = (field, value) => {
+    setEmployeeData(prev => ({ ...prev, [field]: value }));
+  };
+
+  useEffect(() => {
+    const validateForm = () => {
+      const { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department } = employeeData;
+      if (
+        firstName && lastName && dateOfBirth && startDate && street && city && state &&
+        zipCode && department
+      ) {
+        setIsFormValid(true);
+      } else {
+        setIsFormValid(false);
+      }
+    };
+    validateForm();
+  }, [employeeData]);
+
+  const cleanFormData = () => {
     setEmployeeData({
       firstName: '',
       lastName: '',
@@ -58,58 +77,51 @@ const Form = () => {
     setStartDate(new Date());
   }
 
-  const handleInputChange = (field, value) => {
-    if (field === 'dateOfBirth' || field === 'startDate') {
-      value = new Date(value);
-    }
-    setEmployeeData(prev => ({ ...prev, [field]: value }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     const serializableEmployeeData = {
       ...employeeData,
-      dateOfBirth: employeeData.dateOfBirth.toISOString(),
-      startDate: employeeData.startDate.toISOString(),
+      dateOfBirth: new Date(employeeData.dateOfBirth).toISOString(),
+      startDate: new Date(employeeData.startDate).toISOString(),
     };
-
     dispatch(addEmployee(serializableEmployeeData));
-    cleanFormInputs();
+    cleanFormData();
   };
 
   return (
     <form 
       style={formStyles} 
       onSubmit={handleSubmit}
+      noValidate
     >
       <InputForm 
         name="first_name" 
         type="text"  
         value={employeeData.firstName}
         onChange={(e) => handleInputChange('firstName', e.target.value)}
+        required
       />
       <InputForm 
         name="last_name" 
         type="text" 
         value={employeeData.lastName}
         onChange={(e) => handleInputChange('lastName', e.target.value)}
+        required
       />
       <InputForm 
         name="date_of_birth" 
-        type='date' 
-        value={dateOfBirth} 
-        onChange={setDateOfBirth} 
-        isDatePicker 
+        isDatePicker
+        value={employeeData.dateOfBirth} 
+        onChange={(date) => handleInputChange('dateOfBirth', date)} 
+        required
       />
       <InputForm 
         name="start_date" 
-        type='date' 
-        value={startDate} 
-        onChange={setStartDate} 
-        isDatePicker 
+        isDatePicker
+        value={employeeData.startDate} 
+        onChange={(date) => handleInputChange('startDate', date)} 
+        required
       />
-
       <fieldset style={addressStyles}>
         <legend>Address</legend>
         <InputForm 
@@ -118,6 +130,7 @@ const Form = () => {
           type="text" 
           value={employeeData.street}
           onChange={(e) => handleInputChange('street', e.target.value)}
+          required
         />
         <InputForm 
           id="city" 
@@ -125,6 +138,7 @@ const Form = () => {
           type="text" 
           value={employeeData.city}
           onChange={(e) => handleInputChange('city', e.target.value)}
+          required
         />
         <InputForm 
           id="state" 
@@ -132,7 +146,8 @@ const Form = () => {
           data={states} 
           isSelect
           value={employeeData.state}
-          onChange={(e) => handleInputChange('state', e.target.value)} 
+          onChange={(e) => handleInputChange('state', e.target.value)}
+          required 
         />
         <InputForm 
           id="zip_code" 
@@ -140,6 +155,7 @@ const Form = () => {
           type="number" 
           value={employeeData.zipCode}
           onChange={(e) => handleInputChange('zipCode', e.target.value)}
+          required
         />
       </fieldset>
 
@@ -147,12 +163,12 @@ const Form = () => {
         id="department" 
         name="department"  
         data={departments}
-        isSelect   
+        isSelect
+        value={employeeData.department}
+        onChange={(e) => handleInputChange('department', e.target.value)}   
+        required
       />
-      <SubmitButton 
-        disabled={!formIsValid} 
-        type="submit" 
-      />
+      <SubmitButton type="submit" disabled={!isFormValid}/>
     </form>
   );
 };
