@@ -59,7 +59,7 @@ InputForm.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   isSelect: PropTypes.bool,
   data: PropTypes.array,
   isDatePicker: PropTypes.bool

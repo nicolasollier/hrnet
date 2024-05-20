@@ -1,18 +1,23 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTable } from 'react-table';
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import styles from "../styles/Employees.module.css";
+import { employeesSlice } from '../reducers/employeesReducer';
 
 const Employees = () => {
-  const [employees, setEmployees] = useState([]);
+  const dispatch = useDispatch();
+  const employees = useSelector(state => state.employees.employees);
 
   useEffect(() => {
     const storedEmployees = localStorage.getItem('employees');
     if (storedEmployees) {
-      setEmployees(JSON.parse(storedEmployees));
+      JSON.parse(storedEmployees).forEach(employee => {
+        dispatch(employeesSlice.actions.addEmployee(employee));
+      });
     }
-  }, []);
+  }, [dispatch]);
 
   const data = useMemo(() => employees, [employees]);
 
@@ -46,9 +51,16 @@ const Employees = () => {
         <table {...getTableProps()} className={styles.tableDisplay}>
           <thead>
             {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+              <tr
+                key={'tr_' + headerGroup.id}
+                {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()} key={column.id}>{column.render('Header')}</th>
+                  <th
+                    {...column.getHeaderProps()}
+                    key={'th_' + column.id}
+                  >
+                    {column.render('Header')}
+                  </th>
                 ))}
               </tr>
             ))}
@@ -57,9 +69,12 @@ const Employees = () => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.id}>
+                <tr
+                  {...row.getRowProps()}
+                  key={'tr_' + row.id}
+                >
                   {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>;
+                    return <td {...cell.getCellProps()} key={'td_' + cell.column.id}>{cell.render('Cell')}</td>;
                   })}
                 </tr>
               );
