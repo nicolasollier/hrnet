@@ -1,0 +1,9 @@
+.inputStyles {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.4rem;
+  margin-top: 0.2rem;
+  border-radius: 4px;
+  border: 1px solid #213547;
+  background-color: transparent;
+}

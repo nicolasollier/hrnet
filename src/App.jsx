@@ -6,6 +6,7 @@ import Modal from 'simplest-react-modalbox'
 function App() {
   const modalStyles = {
     modal: {
+      zIndex: '1000',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

@@ -1,10 +1,8 @@
-import { useEffect } from "react";
+import { useState } from 'react';
 import InputForm from "./InputForm";
 import { departments, states } from "../constants";
 import SubmitButton from "./SubmitButton";
-import { saveEmployee } from "../../utils/saveEmployee"
-import $ from "jquery";
-import "jquery-datetimepicker";
+import { saveEmployee } from "../../utils/saveEmployee";
 
 const Form = () => {
   const formStyles = {
@@ -14,7 +12,7 @@ const Form = () => {
     alignItems: 'center',
     color: '#213547',
     margin: '2.5rem auto'
-  }
+  };
 
   const addressStyles = {
     width: '100%',
@@ -24,44 +22,30 @@ const Form = () => {
     borderRadius: '4px',
     border: '1px solid #213547',
     paddingBottom: '2rem'
-  }
+  };
 
-  useEffect(() => {
-    const initializeDateInputs = () => {
-      $('#date_of_birth').datetimepicker({
-        timepicker: false,
-        format: 'm/d/Y'
-      });
-
-      $('#start_date').datetimepicker({
-        timepicker: false,
-        format: 'm/d/Y'
-      });
-    };
-
-    initializeDateInputs();
-  }, [])
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <form style={formStyles} action="#">
-      <InputForm name="first_name" />
-      <InputForm name="last_name" />
-      <InputForm name="date_of_birth"></InputForm>
-      <InputForm name="start_date"></InputForm>
+    <form style={formStyles} onSubmit={e => { e.preventDefault(); saveEmployee(); }}>
+      <InputForm name="first_name" type="text" />
+      <InputForm name="last_name" type="text" />
+      <InputForm name="date_of_birth" type='date' value={dateOfBirth} onChange={setDateOfBirth} isDatePicker />
+      <InputForm name="start_date" type='date' value={startDate} onChange={setStartDate} isDatePicker />
 
       <fieldset style={addressStyles}>
         <legend>Address</legend>
-
         <InputForm id="street" name="street" type="text" />
         <InputForm id="city" name="city" type="text" />
-        <InputForm id="state" name="state" type="text" isSelect data={states} />
+        <InputForm id="state" name="state" isSelect data={states} />
         <InputForm id="zip_code" name="zip_code" type="number" />
       </fieldset>
 
-      <InputForm id="department" name="department" type="text" isSelect data={departments} />
-      <SubmitButton type="submit" onClick={saveEmployee} />
+      <InputForm id="department" name="department" isSelect data={departments} />
+      <SubmitButton type="submit" />
     </form>
   );
-}
+};
 
 export default Form;
