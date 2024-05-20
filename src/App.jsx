@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
 import { Link } from 'react-router-dom';
@@ -7,31 +6,32 @@ import Modal from 'simplest-react-modalbox'
 function App() {
   const customStyles = {
     modal: {
-      position: 'fixed',
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(255, 0, 0, 0.5)',
       display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      justifyContent: 'center',
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     content: {
       position: 'relative',
+      top: '25%',
       width: '60%',
+      margin: '0 auto',
       maxWidth: '500px',
       padding: '20px',
       borderRadius: '10px',
-      border: '2px dashed #00f',
-      backgroundColor: '#000',
+      backgroundColor: '#fff',
       color: '#fff',
-      boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.3)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)',
     },
     close: {
       position: 'absolute',
-      top: '8px',
-      right: '8px',
+      top: '3px',
+      right: '12px',
       fontSize: '1.5rem',
-      color: '#ff0',
+      color: '#000',
       cursor: 'pointer',
     },
   };
@@ -39,10 +39,10 @@ function App() {
   return (
     <>
       <Modal
-        styles={customStyles}
         title={"Hello"}
         text={"world!"}
-        onClick={() => console.log('clicked')}
+        isOpen={true}
+        customStyles={customStyles}
       />
       <Header>
         <h1>HRnet</h1>

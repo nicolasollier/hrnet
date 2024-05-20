@@ -8,11 +8,12 @@ import "jquery-datetimepicker";
 
 const Form = () => {
   const formStyles = {
+    maxWidth: '920px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '2rem',
     color: '#213547',
+    margin: '2.5rem auto'
   }
 
   const addressStyles = {

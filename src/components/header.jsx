@@ -6,6 +6,7 @@ const Header = ({ children }) => {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '2rem',
   }
 
   return (
