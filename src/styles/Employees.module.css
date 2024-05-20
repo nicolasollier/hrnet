@@ -1,0 +1,38 @@
+.container {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.tableDisplay {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableDisplay th,
+.tableDisplay td {
+  padding: 12px 15px;
+  border: 1px solid #E9E9EC;
+  text-align: left;
+}
+
+.tableDisplay th {
+  background-color: #9A9A9A;
+  color: white;
+  font-weight: bold;
+}
+
+.tableDisplay td {
+  background-color: #ffffff;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .tableDisplay {
+    font-size: 14px;
+  }
+
+  .tableDisplay th,
+  .tableDisplay td {
+    padding: 8px;
+  }
+}

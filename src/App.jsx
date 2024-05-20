@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'simplest-react-modalbox'
 
 function App() {
-  const customStyles = {
+  const modalStyles = {
     modal: {
       display: 'flex',
       alignItems: 'center',
@@ -42,7 +42,7 @@ function App() {
         title={"Hello"}
         text={"world!"}
         isOpen={true}
-        customStyles={customStyles}
+        customStyles={modalStyles}
       />
       <Header>
         <h1>HRnet</h1>
