@@ -5,7 +5,7 @@ import SubmitButton from "./SubmitButton";
 import { useDispatch } from 'react-redux';
 import { addEmployee } from "../reducers/employeesReducer";
 
-const Form = () => {
+const Form = ({ openModal }) => {
   const dispatch = useDispatch();
 
   const formStyles = {
@@ -86,6 +86,7 @@ const Form = () => {
     };
     dispatch(addEmployee(serializableEmployeeData));
     cleanFormData();
+    openModal();
   };
 
   return (

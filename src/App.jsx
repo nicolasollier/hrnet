@@ -2,8 +2,11 @@ import Header from './components/Header';
 import Form from './components/Form';
 import { Link } from 'react-router-dom';
 import Modal from 'simplest-react-modalbox'
+import { useState } from 'react';
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const modalStyles = {
     modal: {
       zIndex: '1000',
@@ -40,16 +43,17 @@ function App() {
   return (
     <>
       <Modal
-        title={"Hello"}
-        text={"world!"}
-        isOpen={true}
+        title={"Employee Created"}
+        text={"The new employee has been successfully added."}
+        isOpen={isModalOpen}
+        onClose={() => { setIsModalOpen(false) }}
         customStyles={modalStyles}
       />
       <Header>
         <h1>HRnet</h1>
         <Link to='/employees'>View current employees</Link>
       </Header>
-      <Form />
+      <Form openModal={() => { setIsModalOpen(true) }} />
     </>
   );
 }
