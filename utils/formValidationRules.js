@@ -13,3 +13,24 @@ export const is18OrOlder = (dateOfBirth) => {
 
 export const isValidZipCode = (zipCode) => /^\d{5}(-\d{4})?$/.test(zipCode);
 export const isNonEmptyString = (str) => str.trim().length > 0;
+
+export const validateEmployeeForm = (employeeData) => {
+  const { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department } = employeeData;
+  const today = new Date();
+
+  const rules = [
+    isNonEmptyString(firstName),
+    isNonEmptyString(lastName),
+    isValidDate(new Date(dateOfBirth)),
+    is18OrOlder(dateOfBirth),
+    isValidDate(new Date(startDate)),
+    new Date(startDate) <= today,
+    isNonEmptyString(street),
+    isNonEmptyString(city),
+    state,
+    isValidZipCode(zipCode),
+    department
+  ];
+
+  return rules.every(Boolean);
+};

@@ -5,7 +5,7 @@ import { departments, states } from "../constants";
 import SubmitButton from "./SubmitButton";
 import { useDispatch } from 'react-redux';
 import { addEmployee } from "../reducers/employeesReducer";
-import { isValidDate, is18OrOlder, isValidZipCode, isNonEmptyString } from '../../utils/formValidationRules';
+import { validateEmployeeForm } from '../../utils/formValidationRules';
 
 const EmployeeForm = ({ openModal }) => {
   const dispatch = useDispatch();
@@ -43,34 +43,15 @@ const EmployeeForm = ({ openModal }) => {
     department: ''
   });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
 
   const handleInputChange = (field, value) => {
     setEmployeeData(prev => ({ ...prev, [field]: value }));
+    setIsTouched(true);
   };
 
   useEffect(() => {
-    const validateForm = () => {
-      const { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department } = employeeData;
-      const today = new Date();
-
-      const rules = [
-        isNonEmptyString(firstName),
-        isNonEmptyString(lastName),
-        isValidDate(new Date(dateOfBirth)),
-        is18OrOlder(dateOfBirth),
-        isValidDate(new Date(startDate)),
-        new Date(startDate) <= today,
-        isNonEmptyString(street),
-        isNonEmptyString(city),
-        state,
-        isValidZipCode(zipCode),
-        department
-      ];
-
-      setIsFormValid(rules.every(Boolean));
-    };
-
-    validateForm();
+    setIsFormValid(validateEmployeeForm(employeeData));
   }, [employeeData]);
 
   const cleanFormData = () => {
@@ -87,6 +68,7 @@ const EmployeeForm = ({ openModal }) => {
     });
     setDateOfBirth(new Date());
     setStartDate(new Date());
+    setIsTouched(false);
   }
 
   const handleSubmit = (e) => {
@@ -181,6 +163,11 @@ const EmployeeForm = ({ openModal }) => {
         onChange={(e) => handleInputChange('department', e.target.value)}
         required
       />
+      {!isFormValid && isTouched && (
+        <div style={{ color: 'red', marginTop: '1rem' }}>
+          Please fill out all required fields correctly.
+        </div>
+      )}
       <SubmitButton type="submit" disabled={!isFormValid} />
     </form>
   );
