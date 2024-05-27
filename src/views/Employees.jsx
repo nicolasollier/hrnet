@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import styles from "../styles/Employees.module.css";
 import { employeesSlice } from '../reducers/employeesReducer';
+import { formatDate } from '../../utils/dateFormatter';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,11 @@ const Employees = () => {
     }
   }, [dispatch]);
 
-  const data = useMemo(() => employees, [employees]);
+  const data = useMemo(() => employees.map(employee => ({
+    ...employee,
+    dateOfBirth: formatDate(employee.dateOfBirth),
+    startDate: formatDate(employee.startDate)
+  })), [employees]);
 
   const columns = useMemo(() => [
     { Header: 'First Name', accessor: 'firstName' },
@@ -44,7 +49,7 @@ const Employees = () => {
   return (
     <>
       <Header>
-        <h1>Current employees</h1>
+        <h1>Current Employees</h1>
       </Header>
 
       <div className={styles.container}>

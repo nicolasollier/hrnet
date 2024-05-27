@@ -1,9 +1,11 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import InputForm from "./InputForm";
 import { departments, states } from "../constants";
 import SubmitButton from "./SubmitButton";
 import { useDispatch } from 'react-redux';
 import { addEmployee } from "../reducers/employeesReducer";
+import { isValidDate, is18OrOlder, isValidZipCode, isNonEmptyString } from '../../utils/formValidationRules';
 
 const Form = ({ openModal }) => {
   const dispatch = useDispatch();
@@ -49,15 +51,25 @@ const Form = ({ openModal }) => {
   useEffect(() => {
     const validateForm = () => {
       const { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department } = employeeData;
-      if (
-        firstName && lastName && dateOfBirth && startDate && street && city && state &&
-        zipCode && department
-      ) {
-        setIsFormValid(true);
-      } else {
-        setIsFormValid(false);
-      }
+      const today = new Date();
+
+      const rules = [
+        isNonEmptyString(firstName),
+        isNonEmptyString(lastName),
+        isValidDate(new Date(dateOfBirth)),
+        is18OrOlder(dateOfBirth),
+        isValidDate(new Date(startDate)),
+        new Date(startDate) <= today,
+        isNonEmptyString(street),
+        isNonEmptyString(city),
+        state,
+        isValidZipCode(zipCode),
+        department
+      ];
+
+      setIsFormValid(rules.every(Boolean));
     };
+
     validateForm();
   }, [employeeData]);
 
@@ -90,88 +102,92 @@ const Form = ({ openModal }) => {
   };
 
   return (
-    <form 
-      style={formStyles} 
+    <form
+      style={formStyles}
       onSubmit={handleSubmit}
       noValidate
     >
-      <InputForm 
-        name="first_name" 
-        type="text"  
+      <InputForm
+        name="first_name"
+        type="text"
         value={employeeData.firstName}
         onChange={(e) => handleInputChange('firstName', e.target.value)}
         required
       />
-      <InputForm 
-        name="last_name" 
-        type="text" 
+      <InputForm
+        name="last_name"
+        type="text"
         value={employeeData.lastName}
         onChange={(e) => handleInputChange('lastName', e.target.value)}
         required
       />
-      <InputForm 
-        name="date_of_birth" 
+      <InputForm
+        name="date_of_birth"
         isDatePicker
-        value={employeeData.dateOfBirth} 
-        onChange={(date) => handleInputChange('dateOfBirth', date)} 
+        value={employeeData.dateOfBirth}
+        onChange={(date) => handleInputChange('dateOfBirth', date)}
         required
       />
-      <InputForm 
-        name="start_date" 
+      <InputForm
+        name="start_date"
         isDatePicker
-        value={employeeData.startDate} 
-        onChange={(date) => handleInputChange('startDate', date)} 
+        value={employeeData.startDate}
+        onChange={(date) => handleInputChange('startDate', date)}
         required
       />
       <fieldset style={addressStyles}>
         <legend>Address</legend>
-        <InputForm 
-          id="street" 
-          name="street" 
-          type="text" 
+        <InputForm
+          id="street"
+          name="street"
+          type="text"
           value={employeeData.street}
           onChange={(e) => handleInputChange('street', e.target.value)}
           required
         />
-        <InputForm 
-          id="city" 
-          name="city" 
-          type="text" 
+        <InputForm
+          id="city"
+          name="city"
+          type="text"
           value={employeeData.city}
           onChange={(e) => handleInputChange('city', e.target.value)}
           required
         />
-        <InputForm 
-          id="state" 
-          name="state" 
-          data={states} 
+        <InputForm
+          id="state"
+          name="state"
+          data={states}
           isSelect
           value={employeeData.state}
           onChange={(e) => handleInputChange('state', e.target.value)}
-          required 
+          required
         />
-        <InputForm 
-          id="zip_code" 
-          name="zip_code" 
-          type="number" 
+        <InputForm
+          id="zip_code"
+          name="zip_code"
+          type="number"
           value={employeeData.zipCode}
           onChange={(e) => handleInputChange('zipCode', e.target.value)}
           required
         />
       </fieldset>
 
-      <InputForm 
-        id="department" 
-        name="department"  
+      <InputForm
+        id="department"
+        name="department"
         data={departments}
         isSelect
         value={employeeData.department}
-        onChange={(e) => handleInputChange('department', e.target.value)}   
+        onChange={(e) => handleInputChange('department', e.target.value)}
         required
       />
-      <SubmitButton type="submit" disabled={!isFormValid}/>
+      <SubmitButton type="submit" disabled={!isFormValid} />
     </form>
   );
+};
+
+Form.propTypes = {
+  openModal: PropTypes.func,
 };
 
 export default Form;
