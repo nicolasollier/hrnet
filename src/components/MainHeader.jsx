@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Header = ({ children }) => {
+const MainHeader = ({ children }) => {
   const headerStyles = {
     display: 'flex',
     flexDirection: 'column',
@@ -16,8 +16,8 @@ const Header = ({ children }) => {
   );
 }
 
-Header.propTypes = {
+MainHeader.propTypes = {
   children: PropTypes.any,
 }
 
-export default Header;
+export default MainHeader;

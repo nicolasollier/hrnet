@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTable } from 'react-table';
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/MainHeader";
 import styles from "../styles/Employees.module.css";
 import { employeesSlice } from '../reducers/employeesReducer';
 import { formatDate } from '../../utils/dateFormatter';

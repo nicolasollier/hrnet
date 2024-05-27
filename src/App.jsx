@@ -1,5 +1,5 @@
-import Header from './components/Header';
-import Form from './components/Form';
+import MainHeader from './components/MainHeader';
+import EmployeeForm from './components/EmployeeForm';
 import { Link } from 'react-router-dom';
 import Modal from 'simplest-react-modalbox'
 import { useState } from 'react';
@@ -49,11 +49,11 @@ function App() {
         onClose={() => { setIsModalOpen(false) }}
         customStyles={modalStyles}
       />
-      <Header>
+      <MainHeader>
         <h1>HRnet</h1>
         <Link to='/employees'>View current employees</Link>
-      </Header>
-      <Form openModal={() => { setIsModalOpen(true) }} />
+      </MainHeader>
+      <EmployeeForm openModal={() => { setIsModalOpen(true) }} />
     </>
   );
 }

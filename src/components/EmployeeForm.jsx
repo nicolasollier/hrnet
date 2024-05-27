@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addEmployee } from "../reducers/employeesReducer";
 import { isValidDate, is18OrOlder, isValidZipCode, isNonEmptyString } from '../../utils/formValidationRules';
 
-const Form = ({ openModal }) => {
+const EmployeeForm = ({ openModal }) => {
   const dispatch = useDispatch();
 
   const formStyles = {
@@ -186,8 +186,8 @@ const Form = ({ openModal }) => {
   );
 };
 
-Form.propTypes = {
+EmployeeForm.propTypes = {
   openModal: PropTypes.func,
 };
 
-export default Form;
+export default EmployeeForm;
